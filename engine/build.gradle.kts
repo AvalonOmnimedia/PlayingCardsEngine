@@ -21,11 +21,19 @@ val dokkaJar by tasks.creating(Jar::class) {
     from(dokka)
 }
 
+val sourcesJar by tasks.creating(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles sources JAR"
+    classifier = "sources"
+    from(java.sourceSets["main"].allSource)
+}
+
 publishing {
     publications {
         create("default", MavenPublication::class.java) {
             from(components["java"])
             artifact(dokkaJar)
+            artifact(sourcesJar)
         }
     }
     repositories {
