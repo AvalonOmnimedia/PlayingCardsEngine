@@ -1,7 +1,7 @@
 plugins {
     base
     `build-scan`
-    kotlin("jvm") version "1.2.71" apply false
+    kotlin("jvm") version "1.3.0" apply false
 }
 
 buildScan {
