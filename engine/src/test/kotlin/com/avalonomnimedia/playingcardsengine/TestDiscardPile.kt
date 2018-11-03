@@ -1,7 +1,5 @@
-import com.avalonomnimedia.playingcardsengine.Card
-import com.avalonomnimedia.playingcardsengine.DiscardPile
-import com.avalonomnimedia.playingcardsengine.Suit
-import com.avalonomnimedia.playingcardsengine.Value
+package com.avalonomnimedia.playingcardsengine
+
 import org.junit.Assert
 import org.junit.Test
 
