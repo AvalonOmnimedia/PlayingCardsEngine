@@ -3,10 +3,10 @@ package com.avalonomnimedia.playingcardsengine
 import java.util.Stack
 import java.util.UUID
 
-sealed class Deck {
+abstract class Deck {
     protected val cards = ArrayList<Card>()
 
-    protected fun add(deck: Deck) {
+    fun add(deck: Deck) {
         cards.addAll(deck.cards)
     }
 }
@@ -14,16 +14,20 @@ sealed class Deck {
 class PlayingDeck : Deck() {
     fun count() = cards.count()
 
-    fun add(deck: StandardDeck) {
-        super.add(deck)
-    }
-
     fun shuffle() {
         cards.sortBy { UUID.randomUUID() }
     }
 
-    fun takeHand(numberOfCards: Int): Hand {
-        return Hand(cards.take(numberOfCards))
+    fun takeCard(): Card {
+        return cards.removeAt(0)
+    }
+
+    fun takeCards(count: Int): List<Card> {
+        val list = mutableListOf<Card>()
+        for (x in 0 until count) {
+            list.add(cards.removeAt(x))
+        }
+        return list
     }
 }
 
@@ -52,11 +56,3 @@ class StandardDeck : Deck() {
         }
     }
 }
-
-class Hand(val cards: List<Card> = listOf()) {
-    override fun toString(): String {
-        return cards.toString()
-    }
-}
-
-data class Card(val suit: Suit, val value: Value)
