@@ -24,3 +24,17 @@ class FaceUpHand(initialCards: List<Card> = listOf()) : Hand(initialCards) {
         return _cards.toString()
     }
 }
+
+class FaceDownStack(initialCards: List<Card> = listOf()) : Hand(initialCards) {
+    fun addToBottom(card: Card) {
+        _cards.add(card)
+    }
+
+    fun takeTop(): Card {
+        return _cards.removeAt(0)
+    }
+
+    override fun toString(): String {
+        return _cards.toString()
+    }
+}
