@@ -2,6 +2,9 @@ package com.avalonomnimedia.playingcardsengine
 
 import kotlin.reflect.KClass
 
+/**
+ * The metadata that the [GameRunner] keeps about a particular [IGamePhase].
+ */
 class PhaseDefinition<T: IGamePhase, C: GameContextBase>(
     val type: KClass<T>
 ) {
@@ -13,23 +16,29 @@ class PhaseDefinition<T: IGamePhase, C: GameContextBase>(
         transitions[triggerType] = transition
     }
 
+    /**
+     * Used to transition to another [IGamePhase] for a particular [IGameAction].
+     */
     inline fun <reified A: IGameAction> on(noinline transition: (C.() -> KClass<out IGamePhase>)) {
         on(A::class, transition)
     }
 
+    /**
+     * Helper method for getting the [KClass] for a [IGamePhase].
+     */
     inline fun <reified P: IGamePhase> transitionTo(): KClass<P> {
         return P::class
     }
 
     /**
-     * Action performed by state on entry
+     * Function performed by phase on entry.
      */
     fun onEntry(action: (GameContextBase) -> Unit) {
         entryActions.add(action)
     }
 
     /**
-     * Enter the state and run all actions
+     * Enter the phase and run all functions.
      */
     fun enter(gameContext: C) {
         // Every action takes the current state
@@ -37,14 +46,14 @@ class PhaseDefinition<T: IGamePhase, C: GameContextBase>(
     }
 
     /**
-     * Action performed by state on exit
+     * Function performed by phase on exit.
      */
     fun onExit(action: (GameContextBase) -> Unit) {
         exitActions.add(action)
     }
 
     /**
-     * Enter the state and run all actions
+     * Exit the phase and run all functions.
      */
     fun exit(gameContext: C) {
         // Every action takes the current state
@@ -52,7 +61,7 @@ class PhaseDefinition<T: IGamePhase, C: GameContextBase>(
     }
 
     /**
-     * Get the appropriate transition for the [IGameAction]
+     * Get the appropriate transition for the [action]
      */
     fun getTransitionForAction(action: KClass<out IGameAction>): (C.() -> KClass<out IGamePhase>) {
             return transitions[action] ?: throw ActionNotRegisteredException(

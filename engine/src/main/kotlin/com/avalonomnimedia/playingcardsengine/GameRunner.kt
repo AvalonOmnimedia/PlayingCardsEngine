@@ -2,6 +2,9 @@ package com.avalonomnimedia.playingcardsengine
 
 import kotlin.reflect.KClass
 
+/**
+ * Create a new [GameRunner] with a [gameContext] of type [C] and an [initialState].
+ */
 fun <C: GameContextBase> createRunner(gameContext: C, initialState: IGamePhase, init: GameRunner<C>.() -> Unit): GameRunner<C> {
     val runner = GameRunner(gameContext, initialState)
     init(runner)
@@ -21,10 +24,16 @@ internal constructor(
         phaseDefinitions.add(phaseDefinition)
     }
 
+    /**
+     * Register a [IGamePhase] on the [GameRunner]
+     */
     inline fun <reified P: IGamePhase> phase(noinline init: PhaseDefinition<out P, C>.() -> Unit) {
         phase(P::class, init)
     }
 
+    /**
+     * Perform an [action] on the [current phase][currentPhase].
+     */
     fun perform(action: IGameAction) {
         val definition = phaseDefinitions.currentPhase()
         definition.exit(gameContext)

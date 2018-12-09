@@ -3,6 +3,9 @@ package com.avalonomnimedia.playingcardsengine
 import java.util.Stack
 import java.util.UUID
 
+/**
+ * [Deck] base class.  All decks must inherit from this.
+ */
 abstract class Deck {
     protected open val cards = ArrayList<Card>()
 
@@ -11,6 +14,11 @@ abstract class Deck {
     }
 }
 
+/**
+ * The [Deck] used for game play.
+ *
+ * Must be populated with other [decks][Deck].
+ */
 class PlayingDeck : Deck() {
     fun count() = cards.count()
 
@@ -53,6 +61,9 @@ class DiscardPile {
     }
 }
 
+/**
+ * Standard 52 card french [deck][Deck].
+ */
 class StandardDeck : Deck() {
     init {
         Suit.values().forEach { suit ->

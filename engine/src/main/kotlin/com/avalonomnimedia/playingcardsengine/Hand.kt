@@ -1,5 +1,8 @@
 package com.avalonomnimedia.playingcardsengine
 
+/**
+ * [Hand] base class.  All hands must inherit from this.
+ */
 abstract class Hand(initialCards: List<Card> = listOf()) {
     @Suppress("PropertyName", "This is an internal property.")
     protected val _cards = mutableListOf<Card>()
