@@ -13,7 +13,7 @@ buildScan {
 
 allprojects {
     group = "com.avalonomnimedia"
-    version = "0.1"
+    version = "0.2"
 
     repositories {
         jcenter()
