@@ -4,7 +4,7 @@ import java.util.Stack
 import java.util.UUID
 
 abstract class Deck {
-    protected val cards = ArrayList<Card>()
+    protected open val cards = ArrayList<Card>()
 
     fun add(deck: Deck) {
         cards.addAll(deck.cards)
@@ -25,7 +25,7 @@ class PlayingDeck : Deck() {
     fun takeCards(count: Int): List<Card> {
         val list = mutableListOf<Card>()
         for (x in 0 until count) {
-            list.add(cards.removeAt(x))
+            list.add(cards.removeAt(0))
         }
         return list
     }
@@ -33,6 +33,12 @@ class PlayingDeck : Deck() {
 
 class DiscardPile {
     private val stack = Stack<Card>()
+
+    val isEmpty: Boolean
+        get() = stack.isEmpty()
+
+    val isNotEmpty: Boolean
+        get() = stack.isNotEmpty()
 
     fun discard(card: Card) {
         stack.push(card)

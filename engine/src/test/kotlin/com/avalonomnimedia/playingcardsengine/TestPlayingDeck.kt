@@ -89,6 +89,18 @@ class TestPlayingDeck {
     }
 
     @Test
+    fun `when number of cards asked for is 52, should return 52 card`() {
+        val uut = PlayingDeck()
+        uut.add(StandardDeck())
+        val expected = 52
+
+        val hand = uut.takeCards(expected)
+        val actual = hand.count()
+
+        Assert.assertEquals(expected, actual)
+    }
+
+    @Test
     fun `when a card is taken, should return first card`() {
         val uut = PlayingDeck()
         uut.add(StandardDeck())

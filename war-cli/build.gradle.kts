@@ -17,5 +17,6 @@ dependencies {
 
     implementation("com.github.ajalt:clikt:1.5.0")
 
+    testImplementation("io.mockk:mockk:1.8.13.kotlin13")
     testImplementation("junit:junit:4.12")
 }
