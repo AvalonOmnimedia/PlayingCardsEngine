@@ -7,11 +7,7 @@ import java.util.UUID
  * [Deck] base class.  All decks must inherit from this.
  */
 abstract class Deck {
-    protected open val cards = ArrayList<Card>()
-
-    fun add(deck: Deck) {
-        cards.addAll(deck.cards)
-    }
+    abstract val cards: List<Card>
 }
 
 /**
@@ -19,7 +15,9 @@ abstract class Deck {
  *
  * Must be populated with other [decks][Deck].
  */
-class PlayingDeck : Deck() {
+class PlayingDeck {
+    private val cards = mutableListOf<Card>()
+
     fun count() = cards.count()
 
     fun shuffle() {
@@ -36,6 +34,10 @@ class PlayingDeck : Deck() {
             list.add(cards.removeAt(0))
         }
         return list
+    }
+
+    fun add(deck: Deck) {
+        cards.addAll(deck.cards)
     }
 }
 
@@ -65,11 +67,16 @@ class DiscardPile {
  * Standard 52 card french [deck][Deck].
  */
 class StandardDeck : Deck() {
+    override val cards: List<Card>
+
     init {
+        val newCards = mutableListOf<Card>()
         Suit.values().forEach { suit ->
             Value.values().forEach { value ->
-                cards.add(Card(suit, value))
+                newCards.add(Card(suit, value))
             }
         }
+
+        cards = newCards.toList()
     }
 }
