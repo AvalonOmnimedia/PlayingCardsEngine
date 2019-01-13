@@ -58,7 +58,7 @@ class App : CliktCommand() {
         }
         phase<BattleWon> {
             onEntry {
-                val battle = gameContext.currentBattle ?: throw IllegalStateException()
+                val battle = gameContext.currentBattle ?: throw MissingBattleException()
                 TermUi.echo("${battle.winner} won!")
             }
             on<WinnerGetsCards> {
@@ -87,18 +87,17 @@ class App : CliktCommand() {
 
     override fun run() {
         while (true) {
-            runner.perform(
-                when (runner.currentPhase) {
-                    is Start -> Deal
-                    is ReadyToFlip -> Flip
-                    is BattleStarted -> CompareCards
-                    is Tie -> AnteUp
-                    is BattleWon -> WinnerGetsCards
-                    is RoundOver -> CountStacks
-                    is GameOver -> return
-                    else -> throw Exception()
-                }
-            )
+            val action = when (runner.currentPhase) {
+                is Start -> Deal
+                is ReadyToFlip -> Flip
+                is BattleStarted -> CompareCards
+                is Tie -> AnteUp
+                is BattleWon -> WinnerGetsCards
+                is RoundOver -> CountStacks
+                is GameOver -> return
+                else -> throw Exception()
+            }
+            runner.perform(action)
         }
     }
 }
