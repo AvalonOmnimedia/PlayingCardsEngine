@@ -1,4 +1,5 @@
 import com.jfrog.bintray.gradle.BintrayExtension
+import org.gradle.api.tasks.bundling.Jar
 
 plugins {
     `maven-publish`
@@ -44,15 +45,13 @@ val dokka by tasks.getting(org.jetbrains.dokka.gradle.DokkaTask::class) {
 val dokkaJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles Kotlin docs with Dokka"
-    classifier = "javadoc"
     from(dokka)
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles sources JAR"
-    classifier = "sources"
-    from(java.sourceSets["main"].allSource)
+    from(sourceSets.main.get().allSource)
 }
 
 fun MavenPom.addDependencies() = withXml {
