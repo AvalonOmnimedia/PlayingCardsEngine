@@ -1,6 +1,7 @@
 package com.avalonomnimedia.war.cli
 
 import com.avalonomnimedia.playingcardsengine.PlayingDeck
+import com.avalonomnimedia.playingcardsengine.Shuffler
 import com.avalonomnimedia.playingcardsengine.StandardDeck
 import com.avalonomnimedia.playingcardsengine.createRunner
 import com.github.ajalt.clikt.core.CliktCommand
@@ -13,7 +14,7 @@ class App : CliktCommand() {
     private val gameContext = GameContext(
         listOf(WarPlayer("Player 1"), WarPlayer("Player 2")),
         CardComparator(),
-        PlayingDeck().apply { add(StandardDeck()); shuffle() }
+        PlayingDeck(Shuffler()).apply { add(StandardDeck()); shuffle() }
     )
 
     private val runner = createRunner(gameContext, Start()) {

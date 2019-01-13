@@ -37,7 +37,7 @@ internal constructor(
     fun perform(action: IGameAction) {
         val definition = phaseDefinitions.currentPhase()
         definition.exit(gameContext)
-        currentPhase = definition.getTransitionForAction(action::class)(gameContext).java.newInstance()
+        currentPhase = definition.getTransitionForAction(action::class)(gameContext).construct()
         val newDefinition = phaseDefinitions.currentPhase()
         newDefinition.enter(gameContext)
     }
@@ -45,6 +45,10 @@ internal constructor(
     private fun List<PhaseDefinition<*, C>>.currentPhase(): PhaseDefinition<*, C> {
         return singleOrNull { it.type.isInstance(currentPhase) } ?: throw PhaseNotDefinedException(currentPhase, this)
     }
+}
+
+fun <T : Any> KClass<T>.construct(): T {
+    return constructors.first().call()
 }
 
 class PhaseNotDefinedException(
