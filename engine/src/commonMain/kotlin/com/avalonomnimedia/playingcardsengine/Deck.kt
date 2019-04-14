@@ -1,6 +1,6 @@
 package com.avalonomnimedia.playingcardsengine
 
-expect class Shuffler {
+expect class Shuffler() {
     fun shuffle(cards: MutableList<Card>)
 }
 

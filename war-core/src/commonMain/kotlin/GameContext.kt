@@ -1,4 +1,4 @@
-package com.avalonomnimedia.war.cli
+package com.avalonomnimedia.war.core
 
 import com.avalonomnimedia.playingcardsengine.Card
 import com.avalonomnimedia.playingcardsengine.DiscardPile

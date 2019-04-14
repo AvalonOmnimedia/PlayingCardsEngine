@@ -1,11 +1,11 @@
 package com.avalonomnimedia.playingcardsengine
 
-import org.junit.Assert
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class TestFaceDownStack {
     @Test
-    fun `when hand is initialize with cards, they should returned in that order when taken off the top`() {
+    fun whenHandIsInitializeWithCards_theyShouldReturnedInThatOrderWhenTakenOffTheTop() {
         val card1 = Card(Suit.HEARTS, Value.SEVEN)
         val card2 = Card(Suit.CLUBS, Value.SIX)
         val card3 = Card(Suit.DIAMONDS, Value.FOUR)
@@ -14,22 +14,22 @@ class TestFaceDownStack {
         val uut = FaceDownStack(expected)
         val actual = listOf(uut.takeTop(), uut.takeTop(), uut.takeTop())
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `when card is added to bottom of empty stack, should be the first one returned off the top`() {
+    fun whenCardIsAddedToBottomOfEmptyStack_shouldBeTheFirstOneReturnedOffTheTop() {
         val expected = Card(Suit.HEARTS, Value.SEVEN)
 
         val uut = FaceDownStack()
         uut.addToBottom(expected)
         val actual = uut.takeTop()
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `when cards are added to bottom of stack, they should returned in that order when taken off the top`() {
+    fun whenCardsAreAddedToBottomOfStack_theyShouldReturnedInThatOrderWhenTakenOffTheTop() {
         val card1 = Card(Suit.HEARTS, Value.SEVEN)
         val card2 = Card(Suit.CLUBS, Value.SIX)
         val card3 = Card(Suit.DIAMONDS, Value.FOUR)
@@ -41,6 +41,6 @@ class TestFaceDownStack {
         uut.addToBottom(card3)
         val actual = listOf(uut.takeTop(), uut.takeTop(), uut.takeTop())
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 }

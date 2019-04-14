@@ -47,9 +47,7 @@ internal constructor(
     }
 }
 
-fun <T : Any> KClass<T>.construct(): T {
-    return constructors.first().call()
-}
+expect fun <T : Any> KClass<T>.construct(): T
 
 class PhaseNotDefinedException(
     expectedPhase: IGamePhase,

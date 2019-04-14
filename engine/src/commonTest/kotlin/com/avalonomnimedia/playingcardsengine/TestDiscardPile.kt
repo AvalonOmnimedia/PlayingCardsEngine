@@ -1,22 +1,25 @@
 package com.avalonomnimedia.playingcardsengine
 
-import org.junit.Assert
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
+@Suppress("FunctionName")
 class TestDiscardPile {
     @Test
-    fun `when card is discarded, should be on top of pile`() {
+    fun whenCardIsDiscarded_shouldBeOnTopOfPile() {
         val uut = DiscardPile()
         val expected = Card(Suit.CLUBS, Value.KING)
         uut.discard(expected)
 
         val actual = uut.peekTop()
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `when top card is peeked at, should be same next time`() {
+    fun whenTopCardIsPeekedAt_shouldBeSameNextTime() {
         val uut = DiscardPile()
         val firstCard = Card(Suit.DIAMONDS, Value.QUEEN)
         val expected = Card(Suit.CLUBS, Value.KING)
@@ -26,11 +29,11 @@ class TestDiscardPile {
         uut.peekTop()
         val actual = uut.peekTop()
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `when top card is taken, next time should pull next card`() {
+    fun whenTopCardIsTaken_nextTimeShouldPullNextCard() {
         val uut = DiscardPile()
         val firstCard = Card(Suit.DIAMONDS, Value.QUEEN)
         val expected = Card(Suit.CLUBS, Value.KING)
@@ -40,46 +43,46 @@ class TestDiscardPile {
         uut.takeTop()
         val actual = uut.takeTop()
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `when pile has no cards, isEmpty should be true`() {
+    fun whenPileHasNoCards_isEmptyShouldBeTrue() {
         val uut = DiscardPile()
 
         val actual = uut.isEmpty
 
-        Assert.assertTrue(actual)
+        assertTrue(actual)
     }
 
     @Test
-    fun `when pile has cards, isEmpty should be false`() {
+    fun whenPileHasCards_isEmptyShouldBeFalse() {
         val uut = DiscardPile()
         val card = Card(Suit.DIAMONDS, Value.QUEEN)
         uut.discard(card)
 
         val actual = uut.isEmpty
 
-        Assert.assertFalse(actual)
+        assertFalse(actual)
     }
 
     @Test
-    fun `when pile has no cards, isNotEmpty should be false`() {
+    fun whenPileHasNoCards_isNotEmptyShouldBeFalse() {
         val uut = DiscardPile()
 
         val actual = uut.isNotEmpty
 
-        Assert.assertFalse(actual)
+        assertFalse(actual)
     }
 
     @Test
-    fun `when pile has cards, isNotEmpty should be true`() {
+    fun whenPileHasCards_isNotEmptyShouldBeTrue() {
         val uut = DiscardPile()
         val card = Card(Suit.DIAMONDS, Value.QUEEN)
         uut.discard(card)
 
         val actual = uut.isNotEmpty
 
-        Assert.assertTrue(actual)
+        assertTrue(actual)
     }
 }

@@ -2,7 +2,7 @@ package com.avalonomnimedia.playingcardsengine
 
 import kotlin.random.Random
 
-actual class Shuffler {
+actual class Shuffler actual constructor() {
     actual fun shuffle(cards: MutableList<Card>) {
         val random = Random(0)
         cards.sortBy { random.nextInt() }

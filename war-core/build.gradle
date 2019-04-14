@@ -6,23 +6,20 @@ repositories {
     mavenCentral()
 }
 
-apply plugin: 'maven-publish'
-
 kotlin {
     jvm()
     js()
     sourceSets {
         commonMain {
             dependencies {
+                implementation project(":engine")
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
-                implementation 'org.jetbrains.kotlin:kotlin-reflect'
             }
         }
         commonTest {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-test-common'
                 implementation 'org.jetbrains.kotlin:kotlin-test-annotations-common'
-                implementation "io.mockk:mockk-common:1.9"
             }
         }
         jvmMain {
@@ -31,7 +28,6 @@ kotlin {
             }
         }
         jvmTest {
-            dependsOn commonTest
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-test'
                 implementation 'org.jetbrains.kotlin:kotlin-test-junit'
@@ -43,10 +39,25 @@ kotlin {
             }
         }
         jsTest {
-            dependsOn commonTest
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-test-js'
             }
+        }
+    }
+}
+
+task copyFramework {
+    def buildType = project.findProperty("kotlin.build.type") ?: "DEBUG"
+    dependsOn "link${buildType.toLowerCase().capitalize()}FrameworkIos"
+
+    doLast {
+        def srcFile = kotlin.targets.ios.binaries.getFramework(buildType).outputFile
+        def targetDir = getProperty("configuration.build.dir")
+        copy {
+            from srcFile.parent
+            into targetDir
+            include 'greeting.framework/**'
+            include 'greeting.framework.dSYM'
         }
     }
 }

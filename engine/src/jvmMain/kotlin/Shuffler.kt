@@ -2,7 +2,7 @@ package com.avalonomnimedia.playingcardsengine
 
 import java.util.UUID
 
-actual class Shuffler {
+actual class Shuffler actual constructor() {
     actual fun shuffle(cards: MutableList<Card>) {
         cards.sortBy { UUID.randomUUID() }
     }

@@ -1,15 +1,16 @@
 package com.avalonomnimedia.playingcardsengine
 
 import io.mockk.mockk
-import org.junit.Assert
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class TestGameRunner {
 
     private val gameContext = mockk<GameContextBase>()
 
     @Test
-    fun `when runner is created, should call init method`() {
+    fun whenRunnerIsCreated_ShouldCallInitMethod() {
         var actual = false
 
         val initialState = object : IGamePhase { }
@@ -17,11 +18,11 @@ class TestGameRunner {
            actual = true
         }
 
-        Assert.assertTrue("`init` not called", actual)
+        assertTrue(actual, "`init` not called")
     }
 
     @Test
-    fun `when runner is created, should have supplied GameContextBase`() {
+    fun whenRunnerIsCreated_ShouldHaveSuppliedGameContextBase() {
         val expected = mockk<GameContextBase>()
 
         val initialState = object : IGamePhase { }
@@ -29,24 +30,24 @@ class TestGameRunner {
 
         val actual = uut.gameContext
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `when runner is created, should have supplied initial phase`() {
+    fun whenRunnerIsCreated_ShouldHaveSuppliedInitialPhase() {
         val expected = object : IGamePhase { }
 
         val uut = createRunner(gameContext, expected) { }
 
         val actual = uut.currentPhase
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     class DummyPhase : IGamePhase
 
     @Test
-    fun `when phase is created, should be added to phase list`() {
+    fun whenPhaseIsCreated_ShouldBeAddedToPhaseList() {
         val expected = DummyPhase::class
         val initialState = object : IGamePhase { }
 
@@ -56,11 +57,11 @@ class TestGameRunner {
 
         val actual = uut.phaseDefinitions.single().type
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun `when phase is created, should call init`() {
+    fun whenPhaseIsCreated_ShouldCallInit() {
         var actual = false
         val initialState = DummyPhase()
 
@@ -68,7 +69,7 @@ class TestGameRunner {
             phase<DummyPhase> { actual = true }
         }
 
-        Assert.assertTrue("`init` on phase not called", actual)
+        assertTrue(actual, "`init` on phase not called")
     }
 
     class InitialPhase : IGamePhase
@@ -76,7 +77,7 @@ class TestGameRunner {
     class DummyAction : IGameAction
 
     @Test
-    fun `when action is performed, should fire exit actions on initial phase`() {
+    fun whenActionIsPerformed_ShouldFireExitActionsOnInitialPhase() {
         var actual = false
         val initialState = InitialPhase()
 
@@ -94,11 +95,11 @@ class TestGameRunner {
             // For this particular test, we don't care.
         }
 
-        Assert.assertTrue("`onExit` on phase not called", actual)
+        assertTrue(actual, "`onExit` on phase not called")
     }
 
     @Test
-    fun `when action is performed that has not been registered, should throw InvalidActionException`() {
+    fun whenActionIsPerformedThatHasNotBeenRegistered_ShouldThrowInvalidActionException() {
         var actual = false
         val initialState = InitialPhase()
 
@@ -112,11 +113,11 @@ class TestGameRunner {
             actual = true
         }
 
-        Assert.assertTrue("`onExit` on phase not called", actual)
+        assertTrue(actual, "`onExit` on phase not called")
     }
 
     @Test
-    fun `when action is performed that has been registered, should perform that transition`() {
+    fun whenActionIsPerformedThatHasBeenRegistered_ShouldPerformThatTransition() {
         var actual = false
         val initialState = InitialPhase()
 
@@ -136,11 +137,11 @@ class TestGameRunner {
             // For this particular test, we don't care.
         }
 
-        Assert.assertTrue("Transition lambda not called", actual)
+        assertTrue(actual, "Transition lambda not called")
     }
 
     @Test
-    fun `when action is performed that calls phase that has not been defined, should throw PhaseNotDefinedException`() {
+    fun whenActionIsPerformedThatCallsPhaseThatHasNotBeenDefined_ShouldThrowPhaseNotDefinedException() {
         var actual = false
         val initialState = InitialPhase()
 
@@ -158,11 +159,11 @@ class TestGameRunner {
             actual = true
         }
 
-        Assert.assertTrue("Phase _was_ defined!", actual)
+        assertTrue(actual, "Phase _was_ defined!")
     }
 
     @Test
-    fun `when action is performed, should fire enter actions on next phase`() {
+    fun whenActionIsPerformed_ShouldFireEnterActionsOnNextPhase() {
         var actual = false
         val initialState = InitialPhase()
 
@@ -181,11 +182,11 @@ class TestGameRunner {
 
         uut.perform(DummyAction())
 
-        Assert.assertTrue("`onEntry` wasn't defined", actual)
+        assertTrue(actual, "`onEntry` wasn't defined")
     }
 
     @Test
-    fun `when action is performed, currentPhase should change to phased returned from transition`() {
+    fun whenActionIsPerformed_CurrentPhaseShouldChangeToPhasedReturnedFromTransition() {
         val expected = NextPhase::class
         val initialState = InitialPhase()
 
@@ -201,6 +202,6 @@ class TestGameRunner {
         uut.perform(DummyAction())
         val actual = uut.currentPhase::class
 
-        Assert.assertEquals(expected, actual)
+        assertEquals(expected, actual)
     }
 }
