@@ -1,5 +1,6 @@
-package com.avalonomnimedia.playingcardsengine
+package com.avalonomnimedia.playingcardsengine.com.avalonomnimedia.playingcardsengine
 
+import com.avalonomnimedia.playingcardsengine.Card
 import kotlin.random.Random
 
 actual class Shuffler actual constructor() {
