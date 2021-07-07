@@ -26,6 +26,7 @@ kotlin {
             }
         }
         jvmMain {
+            dependsOn(commonMain)
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
             }
@@ -38,6 +39,7 @@ kotlin {
             }
         }
         jsMain {
+            dependsOn(commonMain)
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-js'
             }
