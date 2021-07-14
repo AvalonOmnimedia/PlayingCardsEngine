@@ -5,12 +5,11 @@ import kotlin.reflect.KClass
 /**
  * Create a new [GameRunner] with a [gameContext] of type [C] and an [initialState].
  */
-expect fun <C : GameContextBase> createRunner(
-    gameContext: C,
-    initialState: IGamePhase,
-    init: GameRunner<C>.() -> Unit
-): GameRunner<C>
-
+fun <C: GameContextBase> createRunner(gameContext: C, initialState: IGamePhase, init: GameRunner<C>.() -> Unit): GameRunner<C> {
+    val runner = GameRunner(gameContext, initialState)
+    init(runner)
+    return runner
+}
 class GameRunner<C: GameContextBase>
 internal constructor(
     val gameContext: C,

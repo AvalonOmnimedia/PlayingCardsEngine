@@ -4,7 +4,23 @@ import com.avalonomnimedia.playingcardsengine.PlayingDeck
 import com.avalonomnimedia.playingcardsengine.Shuffler
 import com.avalonomnimedia.playingcardsengine.StandardDeck
 import com.avalonomnimedia.playingcardsengine.createRunner
-import com.avalonomnimedia.war.core.*
+import com.avalonomnimedia.war.core.AnteUp
+import com.avalonomnimedia.war.core.BattleStarted
+import com.avalonomnimedia.war.core.BattleWon
+import com.avalonomnimedia.war.core.CardComparator
+import com.avalonomnimedia.war.core.CompareCards
+import com.avalonomnimedia.war.core.CountStacks
+import com.avalonomnimedia.war.core.Deal
+import com.avalonomnimedia.war.core.Flip
+import com.avalonomnimedia.war.core.GameContext
+import com.avalonomnimedia.war.core.GameOver
+import com.avalonomnimedia.war.core.MissingBattleException
+import com.avalonomnimedia.war.core.ReadyToFlip
+import com.avalonomnimedia.war.core.RoundOver
+import com.avalonomnimedia.war.core.Start
+import com.avalonomnimedia.war.core.Tie
+import com.avalonomnimedia.war.core.WarPlayer
+import com.avalonomnimedia.war.core.WinnerGetsCards
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.output.TermUi
 

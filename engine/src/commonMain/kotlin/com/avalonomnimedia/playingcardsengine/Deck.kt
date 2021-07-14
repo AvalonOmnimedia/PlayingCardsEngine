@@ -15,7 +15,7 @@ expect class Stack<T>() {
 /**
  * [Deck] base class.  All decks must inherit from this.
  */
-expect abstract class Deck {
+abstract class Deck {
      abstract val cards: List<Card>
 }
 
@@ -46,17 +46,45 @@ class DiscardPile {
  *
  * Must be populated with other [decks][Deck].
  */
-expect class PlayingDeck(shuffler: Shuffler) {
-    fun count(): Int
-    fun shuffle()
-    fun takeCard(): Card
-    fun takeCards(count: Int): List<Card>
-    fun add(deck: Deck)
+class PlayingDeck(private val shuffler: Shuffler) {
+    private var cards = mutableListOf<Card>()
+    fun count() = cards.count()
+
+    fun shuffle() {
+        shuffler.shuffle(cards)
+    }
+
+    fun takeCard(): Card {
+        return cards.removeAt(0)
+    }
+
+    fun takeCards(count: Int): List<Card> {
+        val list = mutableListOf<Card>()
+        for (x in 0 until count) {
+            list.add(cards.removeAt(0))
+        }
+        return list
+    }
+
+    fun add(deck: Deck) {
+        cards.addAll(deck.cards)
+    }
 }
 
 /**
  * Standard 52 card french [deck][Deck].
  */
-expect class StandardDeck : Deck {
+class StandardDeck : Deck() {
     override val cards: List<Card>
+
+    init {
+        val newCards = mutableListOf<Card>()
+        Suit.values().forEach { suit ->
+            Value.values().forEach { value ->
+                newCards.add(Card(suit, value))
+            }
+        }
+
+        cards = newCards.toList()
+    }
 }
