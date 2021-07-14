@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     application
-    kotlin("jvm") version "1.3.21"
+    kotlin("jvm")
 }
 
 application {
@@ -12,6 +12,7 @@ application {
 
 dependencies {
     implementation(project(":war-core"))
+    implementation(project(":engine"))
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0")
