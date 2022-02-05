@@ -5,8 +5,8 @@ plugins {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    testImplementation("io.mockk:mockk:1.8.13.kotlin13")
-    testImplementation("junit:junit:4.12")
+    testImplementation("io.mockk:mockk:1.12.2")
+    testImplementation("junit:junit:4.13.2")
 }
 
 val sourcesJar by tasks.creating(Jar::class) {
