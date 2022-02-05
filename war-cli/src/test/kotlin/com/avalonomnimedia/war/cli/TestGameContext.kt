@@ -14,7 +14,7 @@ import org.junit.Test
 class TestGameContext {
     @Test
     fun `player1 should be first player`(){
-        val uut = GameContext(listOf(WarPlayer(""), mockk()), mockk(), mockk())
+        val uut = GameContext(listOf(WarPlayer(""), mockk<WarPlayer>()), mockk(), mockk())
         val expected = uut.players[0]
 
         val actual = uut.player1
@@ -24,7 +24,7 @@ class TestGameContext {
 
     @Test
     fun `player2 should be second player`(){
-        val uut = GameContext(listOf(mockk(), WarPlayer("")), mockk(), mockk())
+        val uut = GameContext(listOf(mockk<WarPlayer>(), WarPlayer("")), mockk(), mockk())
         val expected = uut.players[1]
 
         val actual = uut.player2
@@ -222,7 +222,7 @@ class TestGameContext {
         every { player.hand }.returns(hand)
         every { hand.count() }.returns(52)
 
-        val uut = GameContext(listOf(player, mockk()), mockk(), mockk())
+        val uut = GameContext(listOf(player, mockk<WarPlayer>()), mockk(), mockk())
 
         val actual = uut.onCountStacks()
 
