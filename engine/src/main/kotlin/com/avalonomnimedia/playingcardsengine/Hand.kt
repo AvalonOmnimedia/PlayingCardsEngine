@@ -14,6 +14,10 @@ abstract class Hand(initialCards: List<Card> = listOf()) {
     fun count(): Int {
         return _cards.count()
     }
+
+    override fun toString(): String {
+        return _cards.joinToString(separator = ", ")
+    }
 }
 
 class FaceUpHand(initialCards: List<Card> = listOf()) : Hand(initialCards) {
