@@ -34,7 +34,8 @@ class GameContext(
     }
 
     fun onFlip() {
-        val battle = Battle()
+        val battle = currentBattle ?: Battle()
+
         battle.player1Stack.discard(player1.hand!!.takeTop())
         battle.player2Stack.discard(player2.hand!!.takeTop())
 

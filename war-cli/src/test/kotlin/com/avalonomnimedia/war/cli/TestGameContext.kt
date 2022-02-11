@@ -6,7 +6,9 @@ import com.avalonomnimedia.playingcardsengine.PlayingDeck
 import com.avalonomnimedia.playingcardsengine.Suit
 import com.avalonomnimedia.playingcardsengine.Value
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import io.mockk.verify
 import org.junit.Assert
 import org.junit.Test
@@ -65,7 +67,7 @@ class TestGameContext {
     }
 
     @Test
-    fun `when onFlip is called, currentBattle should not be null`() {
+    fun `when onFlip is called and currentBattle is null, new Battle should be created`() {
         val hand = mockk<FaceDownStack>()
         val player = mockk<WarPlayer>()
 
@@ -78,6 +80,26 @@ class TestGameContext {
         val actual = uut.currentBattle
 
         Assert.assertNotNull(actual)
+    }
+
+    @Test
+    fun `when onFlip is called and currentBattle is not null, currentBattle should be used`() {
+        val hand = mockk<FaceDownStack>()
+        val player = mockk<WarPlayer>()
+
+        val uut = GameContext(listOf(player, player), mockk(), mockk())
+
+        uut.currentBattle = mockk()
+
+        every { uut.currentBattle!!.player1Stack.discard(any()) }.just(runs)
+        every { uut.currentBattle!!.player2Stack.discard(any()) }.just(runs)
+        every { player.hand }.returns(hand)
+        every { hand.takeTop() }.returns(mockk())
+
+        uut.onFlip()
+
+        verify { uut.currentBattle!!.player1Stack.discard(any()) }
+        verify { uut.currentBattle!!.player2Stack.discard(any()) }
     }
 
     @Test
