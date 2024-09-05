@@ -12,6 +12,5 @@ dependencies {
 val sourcesJar by tasks.creating(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles sources JAR"
-    classifier = "sources"
     from(java.sourceSets["main"].allSource)
 }
