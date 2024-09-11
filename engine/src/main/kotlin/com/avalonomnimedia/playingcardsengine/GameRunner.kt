@@ -37,7 +37,7 @@ internal constructor(
     fun perform(action: IGameAction) {
         val definition = phaseDefinitions.currentPhase()
         definition.exit(gameContext)
-        currentPhase = definition.getTransitionForAction(action::class)(gameContext).java.newInstance()
+        currentPhase = definition.getTransitionForAction(action::class)(gameContext).java.getDeclaredConstructor().newInstance()
         val newDefinition = phaseDefinitions.currentPhase()
         newDefinition.enter(gameContext)
     }

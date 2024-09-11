@@ -4,7 +4,6 @@ import com.avalonomnimedia.playingcardsengine.PlayingDeck
 import com.avalonomnimedia.playingcardsengine.StandardDeck
 import com.avalonomnimedia.playingcardsengine.createRunner
 import com.github.ajalt.clikt.core.CliktCommand
-import com.github.ajalt.clikt.output.TermUi
 
 fun main(args: Array<String>) = App().main(args)
 
@@ -18,7 +17,7 @@ class App : CliktCommand() {
 
     private val runner = createRunner(gameContext, Start()) {
         phase<Start> {
-            onEntry { TermUi.echo("Let's play!") }
+            onEntry { echo("Let's play!") }
             on<Deal> {
                 onDeal()
                 transitionTo<ReadyToFlip>()
@@ -37,9 +36,9 @@ class App : CliktCommand() {
                 val card1 = battle.player1Stack.peekTop()
                 val card2 = battle.player2Stack.peekTop()
 
-                TermUi.echo("Round $numberOfRounds")
-                TermUi.echo("Player 1: $card1")
-                TermUi.echo("Player 2: $card2")
+                echo("Round $numberOfRounds")
+                echo("Player 1: $card1")
+                echo("Player 2: $card2")
             }
             on<CompareCards> {
                 val hasWinner = onCompareCards()
@@ -51,7 +50,7 @@ class App : CliktCommand() {
             }
         }
         phase<Tie> {
-            onEntry { TermUi.echo("Tie! It's war!") }
+            onEntry { echo("Tie! It's war!") }
             on<AnteUp> {
                 transitionTo<ReadyToFlip>()
             }
@@ -59,7 +58,7 @@ class App : CliktCommand() {
         phase<BattleWon> {
             onEntry {
                 val battle = gameContext.currentBattle ?: throw IllegalStateException()
-                TermUi.echo("${battle.winner} won!")
+                echo("${battle.winner} won!")
             }
             on<WinnerGetsCards> {
                 onWinnerGetsCards()
@@ -68,7 +67,7 @@ class App : CliktCommand() {
         }
         phase<RoundOver> {
             onEntry {
-                TermUi.echo("Current score: ${gameContext.player1.hand?.count()} to ${gameContext.player2.hand?.count()}")
+                echo("Current score: ${gameContext.player1.hand?.count()} to ${gameContext.player2.hand?.count()}")
                 numberOfRounds++
             }
             on<CountStacks> {
@@ -81,7 +80,7 @@ class App : CliktCommand() {
             }
         }
         phase<GameOver> {
-            onEntry { TermUi.echo("Game over! Player${if (gameContext.player1.hand?.count() == 52) "1" else "2"}") }
+            onEntry { echo("Game over! Player${if (gameContext.player1.hand?.count() == 52) "1" else "2"}") }
         }
     }
 
